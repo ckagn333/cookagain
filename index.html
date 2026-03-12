@@ -328,7 +328,7 @@ textarea.form-input { resize: none; min-height: 90px; line-height: 1.6; }
       </div>
       <!-- Rating -->
       <div class="form-section">
-        <div class="form-label">rate this batch</div>
+        <div class="form-label">rate this batch <span id="rating-hint" style="color:var(--gold-dim);font-size:11px;text-transform:none;letter-spacing:0;">(tap a star)</span></div>
         <div class="star-rater" id="star-rater">
           <button class="star-btn" data-star="1" onclick="setRating(1)">★</button>
           <button class="star-btn" data-star="2" onclick="setRating(2)">★</button>
@@ -715,12 +715,21 @@ function triggerPhotoAdd() {
 function handlePhotoAdd(input) {
   const files = Array.from(input.files);
   files.forEach(file => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      logPhotos.push(e.target.result);
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const maxDim = 800;
+      let w = img.width, h = img.height;
+      if (w > h && w > maxDim) { h = Math.round(h * maxDim / w); w = maxDim; }
+      else if (h > maxDim) { w = Math.round(w * maxDim / h); h = maxDim; }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      logPhotos.push(canvas.toDataURL('image/jpeg', 0.7));
+      URL.revokeObjectURL(url);
       renderLogPhotos();
     };
-    reader.readAsDataURL(file);
+    img.src = url;
   });
   input.value = '';
 }
@@ -761,7 +770,12 @@ function renderChangeList() {
 }
 function removeChange(idx) { logChanges.splice(idx,1); renderChangeList(); }
 
-function setRating(n) { logRating = n; updateStarUI(); }
+function setRating(n) {
+  logRating = n;
+  updateStarUI();
+  const hint = document.getElementById('rating-hint');
+  if (hint) hint.style.display = 'none';
+}
 function updateStarUI() {
   document.querySelectorAll('.star-btn').forEach(b => {
     b.classList.toggle('active', parseInt(b.dataset.star) <= logRating);
@@ -769,10 +783,9 @@ function updateStarUI() {
 }
 
 function saveLog() {
-  if (!currentRecipeId) return;
-  if (logRating === 0) { showToast('please rate this batch'); return; }
+  if (!currentRecipeId) { showToast('error: no recipe selected'); return; }
   const r = db.recipes.find(x => x.id === currentRecipeId);
-  if (!r) return;
+  if (!r) { showToast('error: recipe not found'); return; }
   const iter = {
     id: genId(),
     date: new Date().toISOString(),
@@ -784,10 +797,24 @@ function saveLog() {
     snapshot: document.getElementById('log-snapshot').value.trim(),
   };
   r.iterations.push(iter);
-  saveDB();
-  showToast('cook logged ✓');
-  goBack();
-  setTimeout(() => openRecipe(currentRecipeId), 350);
+  try {
+    saveDB();
+    showToast('cook logged ✓');
+    goBack();
+    setTimeout(() => openRecipe(currentRecipeId), 350);
+  } catch(e) {
+    // Storage full — try saving without photos
+    iter.photos = [];
+    try {
+      saveDB();
+      showToast('saved (photos skipped — storage full)');
+      goBack();
+      setTimeout(() => openRecipe(currentRecipeId), 350);
+    } catch(e2) {
+      r.iterations.pop();
+      showToast('save failed — storage full, try deleting old recipes');
+    }
+  }
 }
 
 // ── ITER DETAIL ───────────────────────────────────────────────────────────
