@@ -992,7 +992,9 @@ function showToast(msg) {
 
 // ── INIT ──────────────────────────────────────────────────────────────────
 renderHome();
-
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/cookagain/sw.js').catch(() => {});
+}
 </script>
 </body>
 </html>
