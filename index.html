@@ -34,6 +34,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .header{padding:52px 20px 16px;background:var(--bg);border-bottom:1px solid var(--border);flex-shrink:0;}
 .header-row{display:flex;align-items:center;justify-content:space-between;}
 .back-btn{background:none;border:none;color:var(--gold);cursor:pointer;padding:4px 8px 4px 0;font-family:var(--font-body);font-size:14px;}
+.edit-btn{background:none;border:none;color:var(--gold);cursor:pointer;padding:4px 0 4px 8px;font-family:var(--font-body);font-size:14px;}
 .screen-title{font-family:var(--font-display);font-size:20px;font-weight:400;color:var(--cream);flex:1;}
 .scroll{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:100px;}
 .scroll::-webkit-scrollbar{display:none;}
@@ -124,6 +125,7 @@ input[type="date"].form-input{color-scheme:dark;}
 .photo-add-icon{font-size:24px;}
 .btn-primary{width:100%;padding:14px;border-radius:var(--radius);background:var(--gold);color:var(--bg);font-family:var(--font-body);font-size:15px;font-weight:500;border:none;cursor:pointer;transition:opacity 0.15s;}
 .btn-primary:active{opacity:0.85;}
+.btn-danger{width:100%;padding:14px;border-radius:var(--radius);background:transparent;color:var(--red-light);font-family:var(--font-body);font-size:15px;font-weight:500;border:1px solid rgba(139,58,58,0.4);cursor:pointer;margin-top:10px;}
 .fab{position:absolute;bottom:88px;right:20px;width:52px;height:52px;border-radius:50%;background:var(--gold);border:none;color:var(--bg);font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(232,184,75,0.35);z-index:20;transition:transform 0.15s;}
 .fab:active{transform:scale(0.94);}
 .recipe-snapshot{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;font-size:13px;line-height:1.9;color:var(--text-dim);white-space:pre-wrap;}
@@ -160,7 +162,7 @@ input[type="date"].form-input{color-scheme:dark;}
   <div class="home-header">
     <div style="display:flex;align-items:baseline;justify-content:space-between;">
       <div class="home-title">Cook <em>Again</em></div>
-      <div style="font-size:11px;color:var(--text-muted);letter-spacing:0.05em;">v3</div>
+      <div style="font-size:11px;color:var(--text-muted);letter-spacing:0.05em;">v4</div>
     </div>
     <div class="home-subtitle" id="home-subtitle">Loading...</div>
   </div>
@@ -193,7 +195,10 @@ input[type="date"].form-input{color-scheme:dark;}
   <div class="header">
     <div class="header-row">
       <button class="back-btn" onclick="goBack()">‹ back</button>
-      <div style="flex:1;text-align:right;" id="recipe-detail-badge"></div>
+      <div style="flex:1;text-align:right;display:flex;align-items:center;justify-content:flex-end;gap:12px;">
+        <div id="recipe-detail-badge"></div>
+        <button class="edit-btn" onclick="showEditRecipe()">edit</button>
+      </div>
     </div>
     <div style="display:flex;align-items:center;gap:12px;margin-top:10px;">
       <div id="recipe-detail-emoji" style="font-size:32px;"></div>
@@ -219,7 +224,7 @@ input[type="date"].form-input{color-scheme:dark;}
   <button class="fab" onclick="showLogCook()">+</button>
 </div>
 
-<!-- LOG COOK -->
+<!-- LOG / EDIT COOK -->
 <div class="screen" id="screen-log">
   <div class="header">
     <div class="header-row">
@@ -268,7 +273,7 @@ input[type="date"].form-input{color-scheme:dark;}
     </div>
     <div class="form-section">
       <div class="form-label">notes</div>
-      <textarea class="form-input" id="log-notes" placeholder="how did it turn out? texture, flavor, what surprised you?"></textarea>
+      <textarea class="form-input" id="log-notes" placeholder="how did it turn out?"></textarea>
     </div>
     <div class="form-section">
       <div class="form-label">try next time</div>
@@ -279,7 +284,8 @@ input[type="date"].form-input{color-scheme:dark;}
       <textarea class="form-input" id="log-snapshot" placeholder="complete recipe for this version..." style="min-height:120px;"></textarea>
     </div>
     <div style="padding:16px 20px 32px;">
-      <button class="btn-primary" onclick="saveLog()">save cook log</button>
+      <button class="btn-primary" id="log-save-btn" onclick="saveLog()">save cook log</button>
+      <button class="btn-danger" id="log-delete-btn" onclick="deleteIter()" style="display:none;">delete this cook</button>
     </div>
   </div>
 </div>
@@ -290,7 +296,10 @@ input[type="date"].form-input{color-scheme:dark;}
     <div class="header-row">
       <button class="back-btn" onclick="goBack()">‹ back</button>
       <div class="screen-title" id="iter-detail-title"></div>
-      <div id="iter-best-badge"></div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div id="iter-best-badge"></div>
+        <button class="edit-btn" onclick="showEditIter()">edit</button>
+      </div>
     </div>
   </div>
   <div class="scroll">
@@ -340,24 +349,7 @@ input[type="date"].form-input{color-scheme:dark;}
     </div>
     <div class="form-section">
       <div class="form-label">pick an emoji</div>
-      <div class="emoji-picker" id="emoji-picker">
-        <div class="emoji-opt selected" data-emoji="🍖" onclick="selectEmoji(this)">🍖</div>
-        <div class="emoji-opt" data-emoji="🥩" onclick="selectEmoji(this)">🥩</div>
-        <div class="emoji-opt" data-emoji="🍞" onclick="selectEmoji(this)">🍞</div>
-        <div class="emoji-opt" data-emoji="🍕" onclick="selectEmoji(this)">🍕</div>
-        <div class="emoji-opt" data-emoji="🍔" onclick="selectEmoji(this)">🍔</div>
-        <div class="emoji-opt" data-emoji="🌮" onclick="selectEmoji(this)">🌮</div>
-        <div class="emoji-opt" data-emoji="🍜" onclick="selectEmoji(this)">🍜</div>
-        <div class="emoji-opt" data-emoji="🍰" onclick="selectEmoji(this)">🍰</div>
-        <div class="emoji-opt" data-emoji="🫙" onclick="selectEmoji(this)">🫙</div>
-        <div class="emoji-opt" data-emoji="🥘" onclick="selectEmoji(this)">🥘</div>
-        <div class="emoji-opt" data-emoji="🍗" onclick="selectEmoji(this)">🍗</div>
-        <div class="emoji-opt" data-emoji="🥚" onclick="selectEmoji(this)">🥚</div>
-        <div class="emoji-opt" data-emoji="🫕" onclick="selectEmoji(this)">🫕</div>
-        <div class="emoji-opt" data-emoji="🥓" onclick="selectEmoji(this)">🥓</div>
-        <div class="emoji-opt" data-emoji="🐟" onclick="selectEmoji(this)">🐟</div>
-        <div class="emoji-opt" data-emoji="🦃" onclick="selectEmoji(this)">🦃</div>
-      </div>
+      <div class="emoji-picker" id="new-emoji-picker"></div>
     </div>
     <div class="form-section">
       <div class="form-label">tags (comma separated)</div>
@@ -365,7 +357,7 @@ input[type="date"].form-input{color-scheme:dark;}
     </div>
     <div class="form-section">
       <div class="form-label">v1 recipe — your starting point</div>
-      <textarea class="form-input" id="new-recipe-text" placeholder="ingredients and method — this becomes v1, the baseline you'll iterate from..." style="min-height:140px;"></textarea>
+      <textarea class="form-input" id="new-recipe-text" placeholder="ingredients and method..." style="min-height:140px;"></textarea>
     </div>
     <div class="form-section">
       <div class="form-label">initial notes (optional)</div>
@@ -377,11 +369,52 @@ input[type="date"].form-input{color-scheme:dark;}
   </div>
 </div>
 
+<!-- EDIT RECIPE -->
+<div class="screen" id="screen-edit-recipe">
+  <div class="header">
+    <div class="header-row">
+      <button class="back-btn" onclick="goBack()">‹ cancel</button>
+      <div class="screen-title">edit recipe</div>
+    </div>
+  </div>
+  <div class="scroll">
+    <div class="form-section">
+      <div class="form-label">recipe name</div>
+      <input class="form-input" id="edit-recipe-name" placeholder="recipe name">
+    </div>
+    <div class="form-section">
+      <div class="form-label">emoji</div>
+      <div class="emoji-picker" id="edit-emoji-picker"></div>
+    </div>
+    <div class="form-section">
+      <div class="form-label">tags (comma separated)</div>
+      <input class="form-input" id="edit-recipe-tags" placeholder="beef, smoked, quick...">
+    </div>
+    <div class="form-section">
+      <div class="form-label">v1 recipe</div>
+      <textarea class="form-input" id="edit-recipe-base" placeholder="your base recipe..." style="min-height:140px;"></textarea>
+    </div>
+    <div class="form-section">
+      <div class="form-label">notes</div>
+      <textarea class="form-input" id="edit-recipe-notes" placeholder="notes..." style="min-height:70px;"></textarea>
+    </div>
+    <div style="padding:16px 20px 32px;">
+      <button class="btn-primary" onclick="saveEditRecipe()">save changes</button>
+      <button class="btn-danger" onclick="deleteRecipe()">delete recipe</button>
+    </div>
+  </div>
+</div>
+
 </div>
 <div id="toast"></div>
 
 <script>
-let db=loadDB(),currentRecipeId=null,logPhotos=[],logChanges=[],logRating=0,currentChangeType=null,selectedEmoji='🍖';
+const EMOJIS=['🍖','🥩','🍞','🍕','🍔','🌮','🍜','🍰','🫙','🥘','🍗','🥚','🫕','🥓','🐟','🦃'];
+
+let db=loadDB(),currentRecipeId=null,currentIterId=null;
+let logPhotos=[],logChanges=[],logRating=0,currentChangeType=null;
+let selectedEmoji='🍖',editSelectedEmoji='🍖';
+let isEditingIter=false;
 let screenStack=['screen-home'];
 
 function loadDB(){try{return JSON.parse(localStorage.getItem('cookagain-db')||'{"recipes":[]}');}catch(e){return{recipes:[]};}}
@@ -389,6 +422,17 @@ function saveDB(){localStorage.setItem('cookagain-db',JSON.stringify(db));}
 function genId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
 function todayValue(){return new Date().toISOString().slice(0,10);}
 
+// ── EMOJI PICKERS ─────────────────────────────────────────────────────────
+function buildEmojiPicker(containerId, currentEmoji, onSelect) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = EMOJIS.map(e =>
+    `<div class="emoji-opt${e===currentEmoji?' selected':''}" data-emoji="${e}" onclick="(${onSelect.toString()})(this)">${e}</div>`
+  ).join('');
+}
+function selectNewEmoji(el){document.querySelectorAll('#new-emoji-picker .emoji-opt').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');selectedEmoji=el.dataset.emoji;}
+function selectEditEmoji(el){document.querySelectorAll('#edit-emoji-picker .emoji-opt').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');editSelectedEmoji=el.dataset.emoji;}
+
+// ── NAV ───────────────────────────────────────────────────────────────────
 function showScreen(id,addToStack=true){
   const cur=screenStack[screenStack.length-1];if(cur===id)return;
   document.getElementById(cur)?.classList.add('prev');
@@ -412,6 +456,7 @@ function showTab(tab){
   if(tab==='journal')renderJournal();else renderHome();
 }
 
+// ── HOME ──────────────────────────────────────────────────────────────────
 function renderHome(){
   const recipes=db.recipes,total=recipes.reduce((a,r)=>a+r.iterations.length,0);
   document.getElementById('home-subtitle').textContent=recipes.length===0?'Start your first recipe below':`${recipes.length} recipe${recipes.length!==1?'s':''} · ${total} cook${total!==1?'s':''}`;
@@ -455,6 +500,7 @@ function recipeCardHTML(r){
 }
 function starsHTML(r){let s='';for(let i=1;i<=5;i++)s+=`<span style="color:${i<=r?'var(--gold)':'var(--text-muted)'};font-size:13px;">★</span>`;return s;}
 
+// ── RECIPE DETAIL ─────────────────────────────────────────────────────────
 function openRecipe(id){
   currentRecipeId=id;const r=db.recipes.find(x=>x.id===id);if(!r)return;
   document.getElementById('recipe-detail-title').textContent=r.name;
@@ -518,8 +564,48 @@ function renderIterList(r){
 }
 function chipHTML(c){const cls=c.type==='add'?'chip-add':c.type==='remove'?'chip-remove':'chip-tweak',sym=c.type==='add'?'+':c.type==='remove'?'−':'~';return `<span class="chip ${cls}">${sym} ${c.text}</span>`;}
 
+// ── EDIT RECIPE ───────────────────────────────────────────────────────────
+function showEditRecipe(){
+  const r=db.recipes.find(x=>x.id===currentRecipeId);if(!r)return;
+  document.getElementById('edit-recipe-name').value=r.name;
+  document.getElementById('edit-recipe-tags').value=r.tags.join(', ');
+  document.getElementById('edit-recipe-base').value=r.baseRecipe||'';
+  document.getElementById('edit-recipe-notes').value=r.notes||'';
+  editSelectedEmoji=r.emoji;
+  buildEmojiPicker('edit-emoji-picker', r.emoji, selectEditEmoji);
+  showScreen('screen-edit-recipe');
+}
+function saveEditRecipe(){
+  const r=db.recipes.find(x=>x.id===currentRecipeId);if(!r)return;
+  const name=document.getElementById('edit-recipe-name').value.trim();
+  if(!name){showToast('please enter a recipe name');return;}
+  r.name=name;
+  r.emoji=editSelectedEmoji;
+  r.tags=document.getElementById('edit-recipe-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  r.baseRecipe=document.getElementById('edit-recipe-base').value.trim();
+  r.notes=document.getElementById('edit-recipe-notes').value.trim();
+  saveDB();showToast('recipe updated ✓');goBack();
+  // refresh recipe detail
+  document.getElementById('recipe-detail-title').textContent=r.name;
+  document.getElementById('recipe-detail-emoji').textContent=r.emoji;
+  document.getElementById('recipe-detail-tags').textContent=r.tags.join(' · ');
+  renderMasterSection(r);renderHome();
+}
+function deleteRecipe(){
+  if(!confirm('Delete this recipe and all its cooks? This cannot be undone.'))return;
+  db.recipes=db.recipes.filter(x=>x.id!==currentRecipeId);
+  saveDB();showToast('recipe deleted');
+  // pop back to home
+  screenStack=['screen-home'];
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active','prev'));
+  document.getElementById('screen-home').classList.add('active');
+  renderHome();
+}
+
+// ── LOG COOK ──────────────────────────────────────────────────────────────
 function showLogCook(){
   const r=db.recipes.find(x=>x.id===currentRecipeId);if(!r)return;
+  isEditingIter=false; currentIterId=null;
   logPhotos=[];logChanges=[];logRating=0;currentChangeType=null;
   const vNum=r.iterations.length+1;
   document.getElementById('log-screen-title').textContent=`v${vNum} — log a cook`;
@@ -528,13 +614,39 @@ function showLogCook(){
   document.getElementById('log-snapshot').value=lastSnap||'';
   const lastNext=r.iterations.length>0?r.iterations[r.iterations.length-1].nextTime:'';
   document.getElementById('log-notes').value='';
-  document.getElementById('log-notes').placeholder=lastNext?`Last time you noted: "${lastNext}" — how did it go?`:'how did it turn out? texture, flavor, what surprised you?';
+  document.getElementById('log-notes').placeholder=lastNext?`Last time: "${lastNext}" — how did it go?`:'how did it turn out?';
   document.getElementById('log-next-time').value='';
+  document.getElementById('log-save-btn').textContent='save cook log';
+  document.getElementById('log-delete-btn').style.display='none';
   renderLogPhotos();renderChangeList();updateStarUI();
   const hint=document.getElementById('rating-hint');if(hint)hint.style.display='inline';
   document.getElementById('change-input-area').style.display='none';
   showScreen('screen-log');
 }
+
+function showEditIter(){
+  const r=db.recipes.find(x=>x.id===currentRecipeId);if(!r)return;
+  const iter=r.iterations.find(i=>i.id===currentIterId);if(!iter)return;
+  isEditingIter=true;
+  logPhotos=[...iter.photos||[]];
+  logChanges=[...iter.changes||[]];
+  logRating=iter.rating||0;
+  currentChangeType=null;
+  const iterIdx=r.iterations.indexOf(iter);
+  document.getElementById('log-screen-title').textContent=`edit v${iterIdx+1}`;
+  document.getElementById('log-date').value=iter.date?iter.date.slice(0,10):todayValue();
+  document.getElementById('log-snapshot').value=iter.snapshot||'';
+  document.getElementById('log-notes').value=iter.notes||'';
+  document.getElementById('log-notes').placeholder='how did it turn out?';
+  document.getElementById('log-next-time').value=iter.nextTime||'';
+  document.getElementById('log-save-btn').textContent='save changes';
+  document.getElementById('log-delete-btn').style.display='block';
+  renderLogPhotos();renderChangeList();updateStarUI();
+  const hint=document.getElementById('rating-hint');if(hint)hint.style.display='none';
+  document.getElementById('change-input-area').style.display='none';
+  showScreen('screen-log');
+}
+
 function triggerPhotoAdd(){document.getElementById('photo-input').click();}
 function handlePhotoAdd(input){
   Array.from(input.files).forEach(file=>{
@@ -578,14 +690,49 @@ function saveLog(){
   if(!currentRecipeId){showToast('error: no recipe selected');return;}
   const r=db.recipes.find(x=>x.id===currentRecipeId);if(!r){showToast('error: recipe not found');return;}
   const dateVal=document.getElementById('log-date').value;
-  const iter={id:genId(),date:dateVal?new Date(dateVal+'T12:00:00').toISOString():new Date().toISOString(),photos:[...logPhotos],changes:[...logChanges],rating:logRating,notes:document.getElementById('log-notes').value.trim(),nextTime:document.getElementById('log-next-time').value.trim(),snapshot:document.getElementById('log-snapshot').value.trim()};
-  r.iterations.push(iter);
-  if(r.iterations.length===1)r.masterIterId=iter.id;
-  try{saveDB();showToast('cook logged ✓');goBack();setTimeout(()=>openRecipe(currentRecipeId),350);}
-  catch(e){iter.photos=[];try{saveDB();showToast('saved (photos skipped — storage full)');goBack();setTimeout(()=>openRecipe(currentRecipeId),350);}catch(e2){r.iterations.pop();showToast('save failed — storage full');}}
+  const iterData={
+    date:dateVal?new Date(dateVal+'T12:00:00').toISOString():new Date().toISOString(),
+    photos:[...logPhotos],changes:[...logChanges],rating:logRating,
+    notes:document.getElementById('log-notes').value.trim(),
+    nextTime:document.getElementById('log-next-time').value.trim(),
+    snapshot:document.getElementById('log-snapshot').value.trim()
+  };
+  if(isEditingIter){
+    // update existing
+    const idx=r.iterations.findIndex(i=>i.id===currentIterId);
+    if(idx===-1){showToast('error: cook not found');return;}
+    r.iterations[idx]={...r.iterations[idx],...iterData};
+    try{saveDB();showToast('cook updated ✓');goBack();setTimeout(()=>openIter(currentRecipeId,currentIterId),350);}
+    catch(e){r.iterations[idx].photos=[];try{saveDB();showToast('saved (photos skipped)');goBack();setTimeout(()=>openIter(currentRecipeId,currentIterId),350);}catch(e2){showToast('save failed — storage full');}}
+  } else {
+    // new cook
+    const iter={id:genId(),...iterData};
+    r.iterations.push(iter);
+    if(r.iterations.length===1)r.masterIterId=iter.id;
+    try{saveDB();showToast('cook logged ✓');goBack();setTimeout(()=>openRecipe(currentRecipeId),350);}
+    catch(e){iter.photos=[];try{saveDB();showToast('saved (photos skipped)');goBack();setTimeout(()=>openRecipe(currentRecipeId),350);}catch(e2){r.iterations.pop();showToast('save failed — storage full');}}
+  }
 }
 
+function deleteIter(){
+  if(!confirm('Delete this cook? This cannot be undone.'))return;
+  const r=db.recipes.find(x=>x.id===currentRecipeId);if(!r)return;
+  r.iterations=r.iterations.filter(i=>i.id!==currentIterId);
+  if(r.masterIterId===currentIterId){
+    r.masterIterId=r.iterations.length===1?r.iterations[0].id:null;
+  }
+  saveDB();showToast('cook deleted');
+  // go back to recipe detail
+  screenStack=screenStack.filter(s=>s!=='screen-log'&&s!=='screen-iter');
+  if(!screenStack.includes('screen-recipe'))screenStack.push('screen-recipe');
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active','prev'));
+  document.getElementById('screen-recipe').classList.add('active');
+  openRecipe(currentRecipeId);
+}
+
+// ── ITER DETAIL ───────────────────────────────────────────────────────────
 function openIter(recipeId,iterId){
+  currentRecipeId=recipeId; currentIterId=iterId;
   const r=db.recipes.find(x=>x.id===recipeId);if(!r)return;
   const iterIdx=r.iterations.findIndex(i=>i.id===iterId),iter=r.iterations[iterIdx];if(!iter)return;
   const vNum=iterIdx+1,isMaster=r.masterIterId===iterId;
@@ -617,18 +764,25 @@ function markAsMaster(recipeId,iterId){
   renderMasterSection(r);renderIterList(r);
 }
 
-function selectEmoji(el){document.querySelectorAll('.emoji-opt').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');selectedEmoji=el.dataset.emoji;}
+// ── NEW RECIPE ────────────────────────────────────────────────────────────
+function initNewRecipe(){
+  selectedEmoji='🍖';
+  buildEmojiPicker('new-emoji-picker','🍖',selectNewEmoji);
+  document.getElementById('new-name').value='';
+  document.getElementById('new-tags').value='';
+  document.getElementById('new-recipe-text').value='';
+  document.getElementById('new-notes').value='';
+  showScreen('screen-new-recipe');
+}
 function saveNewRecipe(){
   const name=document.getElementById('new-name').value.trim();if(!name){showToast('please enter a recipe name');return;}
   const tags=document.getElementById('new-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
-  const baseRecipe=document.getElementById('new-recipe-text').value.trim();
-  const notes=document.getElementById('new-notes').value.trim();
-  const recipe={id:genId(),name,emoji:selectedEmoji,tags,baseRecipe,notes,masterIterId:null,createdAt:new Date().toISOString(),iterations:[]};
+  const recipe={id:genId(),name,emoji:selectedEmoji,tags,baseRecipe:document.getElementById('new-recipe-text').value.trim(),notes:document.getElementById('new-notes').value.trim(),masterIterId:null,createdAt:new Date().toISOString(),iterations:[]};
   db.recipes.unshift(recipe);saveDB();
-  document.getElementById('new-name').value='';document.getElementById('new-tags').value='';document.getElementById('new-recipe-text').value='';document.getElementById('new-notes').value='';
   showToast('recipe created ✓');goBack();renderHome();
 }
 
+// ── JOURNAL ───────────────────────────────────────────────────────────────
 function renderJournal(){
   const el=document.getElementById('journal-list'),allIters=[];
   db.recipes.forEach(r=>r.iterations.forEach((iter,idx)=>allIters.push({...iter,recipeName:r.name,recipeEmoji:r.emoji,recipeId:r.id,vNum:idx+1,isMaster:r.masterIterId===iter.id})));
@@ -644,9 +798,13 @@ function renderJournal(){
   </div>`).join('');
 }
 
+// ── UTILS ─────────────────────────────────────────────────────────────────
 function formatDate(iso){const d=new Date(iso);return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
 function formatRelDate(iso){const d=new Date(iso),now=new Date(),diff=Math.floor((now-d)/86400000);if(diff===0)return'today';if(diff===1)return'yesterday';if(diff<7)return`${diff}d ago`;if(diff<30)return`${Math.floor(diff/7)}w ago`;return formatDate(iso);}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
+
+// patch fab and new recipe button to use initNewRecipe
+document.querySelector('.fab').onclick=initNewRecipe;
 
 renderHome();
 if('serviceWorker' in navigator){navigator.serviceWorker.register('/cookagain/sw.js').catch(()=>{});}
