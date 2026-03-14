@@ -152,31 +152,25 @@ input[type="date"].form-input{color-scheme:dark;}
 .master-btn{display:flex;align-items:center;gap:8px;padding:11px 16px;border-radius:var(--radius);border:1px solid rgba(232,184,75,0.3);background:rgba(232,184,75,0.06);color:var(--gold);font-family:var(--font-body);font-size:14px;cursor:pointer;width:100%;justify-content:center;}
 #toast{position:fixed;bottom:110px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--surface3);border:1px solid var(--border2);border-radius:20px;padding:8px 18px;font-size:13px;color:var(--cream);opacity:0;transition:opacity 0.2s,transform 0.2s;pointer-events:none;z-index:100;white-space:nowrap;}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-
-/* ── INGREDIENT EDITOR STYLES ─────────────────────────────────────────── */
-.ingr-list{margin-bottom:10px;}
-.ingr-row{display:flex;align-items:center;gap:6px;margin-bottom:7px;}
-.ingr-amount{width:60px;flex-shrink:0;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 10px;font-size:14px;font-family:var(--font-body);color:var(--text);outline:none;-webkit-appearance:none;text-align:center;}
-.ingr-amount:focus{border-color:var(--gold-dim);}
-.ingr-amount::placeholder{color:var(--text-muted);}
-.ingr-unit{width:84px;flex-shrink:0;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 6px;font-size:13px;font-family:var(--font-body);color:var(--text);outline:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a7d62'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;padding-right:22px;color-scheme:dark;}
-.ingr-unit:focus{border-color:var(--gold-dim);}
-.ingr-unit option{background:#242018;color:var(--text);}
-.ingr-name{flex:1;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;font-size:14px;font-family:var(--font-body);color:var(--text);outline:none;-webkit-appearance:none;}
-.ingr-name:focus{border-color:var(--gold-dim);}
-.ingr-name::placeholder{color:var(--text-muted);}
-.ingr-del{flex-shrink:0;background:none;border:none;color:var(--text-muted);font-size:18px;cursor:pointer;padding:0 2px;line-height:1;width:24px;text-align:center;}
-.ingr-del:active{color:var(--red-light);}
-.add-ingr-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:var(--radius-sm);border:1px dashed var(--border2);background:transparent;color:var(--text-dim);font-family:var(--font-body);font-size:13px;cursor:pointer;width:100%;justify-content:center;transition:border-color 0.12s,color 0.12s;}
-.add-ingr-btn:active{border-color:var(--gold-dim);color:var(--gold);}
-
-/* ── INGREDIENT DISPLAY STYLES ────────────────────────────────────────── */
-.ingr-display-list{margin:0;}
-.ingr-display-row{display:flex;align-items:baseline;gap:0;padding:5px 0;border-bottom:1px solid rgba(255,220,120,0.06);}
-.ingr-display-row:last-child{border-bottom:none;}
-.ingr-display-amount{font-size:13px;font-weight:500;color:var(--cream);min-width:36px;flex-shrink:0;font-variant-numeric:tabular-nums;}
-.ingr-display-unit{font-size:12px;color:var(--gold-dim);min-width:52px;flex-shrink:0;padding-left:4px;}
-.ingr-display-name{font-size:13px;color:var(--text-dim);flex:1;}
+/* ── AUDIO RECORDING ── */
+.audio-record-btn{display:flex;align-items:center;gap:10px;width:100%;padding:13px 16px;border-radius:var(--radius);border:1px solid rgba(200,80,80,0.35);background:rgba(139,58,58,0.12);color:var(--red-light);font-family:var(--font-body);font-size:14px;cursor:pointer;transition:all 0.15s;justify-content:center;}
+.audio-record-btn:active{opacity:0.8;}
+.audio-record-btn.recording{background:rgba(139,58,58,0.25);border-color:rgba(200,80,80,0.6);color:#e87070;}
+.rec-dot{width:10px;height:10px;border-radius:50%;background:var(--red-light);flex-shrink:0;}
+.rec-dot.pulse{animation:recPulse 1s ease-in-out infinite;}
+@keyframes recPulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.7);}}
+.rec-timer{font-variant-numeric:tabular-nums;font-size:13px;color:var(--red-light);min-width:38px;}
+.audio-list{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+.audio-item{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;}
+.audio-play-btn{width:34px;height:34px;border-radius:50%;background:rgba(232,184,75,0.1);border:1px solid var(--gold-dim);color:var(--gold);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.12s;}
+.audio-play-btn:active{background:rgba(232,184,75,0.25);}
+.audio-play-btn.playing{background:rgba(232,184,75,0.2);}
+.audio-waveform{flex:1;height:28px;display:flex;align-items:center;gap:2px;overflow:hidden;}
+.audio-waveform-bar{width:3px;border-radius:2px;background:var(--text-muted);flex-shrink:0;transition:background 0.1s;}
+.audio-waveform-bar.active{background:var(--gold-dim);}
+.audio-meta{font-size:11px;color:var(--text-dim);white-space:nowrap;}
+.audio-del-btn{background:none;border:none;color:var(--text-muted);font-size:16px;cursor:pointer;padding:0 2px;flex-shrink:0;}
+.audio-progress{font-size:11px;color:var(--gold-dim);min-width:32px;text-align:right;font-variant-numeric:tabular-nums;}
 </style>
 </head>
 <body>
@@ -272,6 +266,15 @@ input[type="date"].form-input{color-scheme:dark;}
       <input type="file" id="photo-input" accept="image/*" multiple style="display:none;" onchange="handlePhotoAdd(this)">
     </div>
     <div class="form-section">
+      <div class="form-label">voice memos</div>
+      <button class="audio-record-btn" id="record-btn" onclick="toggleRecording()">
+        <span class="rec-dot" id="rec-dot"></span>
+        <span id="rec-btn-label">hold to record a memo</span>
+        <span class="rec-timer" id="rec-timer" style="display:none;">0:00</span>
+      </button>
+      <div class="audio-list" id="audio-list"></div>
+    </div>
+    <div class="form-section">
       <div class="form-label">what changed?</div>
       <div class="change-list" id="change-list"></div>
       <div class="change-add-row">
@@ -305,13 +308,8 @@ input[type="date"].form-input{color-scheme:dark;}
       <input class="form-input" id="log-next-time" placeholder="ideas for the next cook...">
     </div>
     <div class="form-section">
-      <div class="form-label">ingredients as cooked</div>
-      <div class="ingr-list" id="log-ingr-list"></div>
-      <button class="add-ingr-btn" onclick="addIngrRow()">+ add ingredient</button>
-    </div>
-    <div class="form-section">
-      <div class="form-label">method / instructions</div>
-      <textarea class="form-input" id="log-snapshot" placeholder="steps, technique, timing..." style="min-height:120px;"></textarea>
+      <div class="form-label">full recipe as cooked</div>
+      <textarea class="form-input" id="log-snapshot" placeholder="complete recipe for this version..." style="min-height:120px;"></textarea>
     </div>
     <div style="padding:16px 20px 32px;">
       <button class="btn-primary" id="log-save-btn" onclick="saveLog()">save cook log</button>
@@ -342,6 +340,10 @@ input[type="date"].form-input{color-scheme:dark;}
     <div id="iter-photos-section" style="padding:14px 0;border-bottom:1px solid var(--border);">
       <div class="photo-scroll" id="iter-photos"></div>
     </div>
+    <div id="iter-audio-section" style="padding:14px 20px;border-bottom:1px solid var(--border);display:none;">
+      <div class="form-label" style="margin-bottom:10px;">voice memos</div>
+      <div class="audio-list" id="iter-audio-list"></div>
+    </div>
     <div style="padding:14px 20px;border-bottom:1px solid var(--border);" id="iter-changes-section">
       <div class="form-label" style="margin-bottom:8px;">changes this cook</div>
       <div id="iter-detail-changes"></div>
@@ -356,12 +358,8 @@ input[type="date"].form-input{color-scheme:dark;}
         <div id="iter-detail-next"></div>
       </div>
     </div>
-    <div style="padding:14px 20px;border-bottom:1px solid var(--border);" id="iter-ingr-section">
-      <div class="form-label" style="margin-bottom:10px;">ingredients</div>
-      <div class="ingr-display-list" id="iter-detail-ingr"></div>
-    </div>
-    <div style="padding:14px 20px;border-bottom:1px solid var(--border);" id="iter-snapshot-section">
-      <div class="form-label" style="margin-bottom:8px;">method / instructions</div>
+    <div style="padding:14px 20px;border-bottom:1px solid var(--border);">
+      <div class="form-label" style="margin-bottom:8px;">full recipe snapshot</div>
       <div class="recipe-snapshot" id="iter-detail-snapshot"></div>
     </div>
     <div style="padding:16px 20px 32px;" id="iter-master-btn-wrap"></div>
@@ -390,13 +388,8 @@ input[type="date"].form-input{color-scheme:dark;}
       <input class="form-input" id="new-tags" placeholder="beef, smoked, quick, baking...">
     </div>
     <div class="form-section">
-      <div class="form-label">v1 ingredients — your starting point</div>
-      <div class="ingr-list" id="new-ingr-list"></div>
-      <button class="add-ingr-btn" onclick="addNewIngrRow()">+ add ingredient</button>
-    </div>
-    <div class="form-section">
-      <div class="form-label">v1 method / instructions</div>
-      <textarea class="form-input" id="new-recipe-text" placeholder="steps, technique, timing..." style="min-height:140px;"></textarea>
+      <div class="form-label">v1 recipe — your starting point</div>
+      <textarea class="form-input" id="new-recipe-text" placeholder="ingredients and method..." style="min-height:140px;"></textarea>
     </div>
     <div class="form-section">
       <div class="form-label">initial notes (optional)</div>
@@ -430,13 +423,8 @@ input[type="date"].form-input{color-scheme:dark;}
       <input class="form-input" id="edit-recipe-tags" placeholder="beef, smoked, quick...">
     </div>
     <div class="form-section">
-      <div class="form-label">v1 ingredients</div>
-      <div class="ingr-list" id="edit-ingr-list"></div>
-      <button class="add-ingr-btn" onclick="addEditIngrRow()">+ add ingredient</button>
-    </div>
-    <div class="form-section">
-      <div class="form-label">v1 method / instructions</div>
-      <textarea class="form-input" id="edit-recipe-base" placeholder="steps, technique, timing..." style="min-height:140px;"></textarea>
+      <div class="form-label">v1 recipe</div>
+      <textarea class="form-input" id="edit-recipe-base" placeholder="your base recipe..." style="min-height:140px;"></textarea>
     </div>
     <div class="form-section">
       <div class="form-label">notes</div>
@@ -454,7 +442,6 @@ input[type="date"].form-input{color-scheme:dark;}
 
 <script>
 const EMOJIS=['🍖','🥩','🍞','🍕','🍔','🌮','🍜','🍰','🫙','🥘','🍗','🥚','🫕','🥓','🐟','🦃'];
-const UNITS=['','tsp','tbsp','cup','oz','fl oz','lb','g','kg','ml','l','pinch','whole','slice','clove','sprig','bunch','can','pkg'];
 
 let db=loadDB(),currentRecipeId=null,currentIterId=null;
 let logPhotos=[],logChanges=[],logRating=0,currentChangeType=null;
@@ -462,101 +449,10 @@ let selectedEmoji='🍖',editSelectedEmoji='🍖';
 let isEditingIter=false;
 let screenStack=['screen-home'];
 
-// ingredient state arrays: each context has its own
-let newIngredients=[];    // new recipe screen
-let editIngredients=[];   // edit recipe screen
-let logIngredients=[];    // log/edit cook screen
-
 function loadDB(){try{return JSON.parse(localStorage.getItem('cookagain-db')||'{"recipes":[]}');}catch(e){return{recipes:[]};}}
 function saveDB(){localStorage.setItem('cookagain-db',JSON.stringify(db));}
 function genId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
 function todayValue(){return new Date().toISOString().slice(0,10);}
-
-// ── INGREDIENT EDITOR ─────────────────────────────────────────────────────
-function unitOptions(selected){
-  return UNITS.map(u=>`<option value="${u}"${u===selected?' selected':''}>${u||'—'}</option>`).join('');
-}
-
-function ingrRowHTML(idx,ingr,prefix){
-  return `<div class="ingr-row" id="${prefix}-ingr-${idx}">
-    <input class="ingr-amount" type="text" inputmode="decimal" placeholder="qty" value="${ingr.amount||''}" oninput="updateIngr('${prefix}',${idx},'amount',this.value)">
-    <select class="ingr-unit" onchange="updateIngr('${prefix}',${idx},'unit',this.value)">${unitOptions(ingr.unit||'')}</select>
-    <input class="ingr-name" type="text" placeholder="ingredient" value="${ingr.name||''}" oninput="updateIngr('${prefix}',${idx},'name',this.value)">
-    <button class="ingr-del" onclick="removeIngr('${prefix}',${idx})">×</button>
-  </div>`;
-}
-
-function getIngrArr(prefix){
-  if(prefix==='new')return newIngredients;
-  if(prefix==='edit')return editIngredients;
-  return logIngredients;
-}
-function getIngrListId(prefix){
-  if(prefix==='new')return 'new-ingr-list';
-  if(prefix==='edit')return 'edit-ingr-list';
-  return 'log-ingr-list';
-}
-
-function renderIngrList(prefix){
-  const arr=getIngrArr(prefix);
-  document.getElementById(getIngrListId(prefix)).innerHTML=arr.map((ingr,i)=>ingrRowHTML(i,ingr,prefix)).join('');
-}
-
-function updateIngr(prefix,idx,field,val){
-  getIngrArr(prefix)[idx][field]=val;
-}
-
-function removeIngr(prefix,idx){
-  getIngrArr(prefix).splice(idx,1);
-  renderIngrList(prefix);
-}
-
-function addIngrRowTo(prefix){
-  getIngrArr(prefix).push({amount:'',unit:'',name:''});
-  renderIngrList(prefix);
-  // focus the amount field of the new row
-  const arr=getIngrArr(prefix);
-  const newIdx=arr.length-1;
-  setTimeout(()=>{
-    const row=document.getElementById(`${prefix}-ingr-${newIdx}`);
-    if(row)row.querySelector('.ingr-amount').focus();
-  },50);
-}
-
-function addIngrRow(){addIngrRowTo('log');}
-function addNewIngrRow(){addIngrRowTo('new');}
-function addEditIngrRow(){addIngrRowTo('edit');}
-
-// read current values from DOM before saving (in case oninput missed anything)
-function harvestIngr(prefix){
-  const arr=getIngrArr(prefix);
-  const listEl=document.getElementById(getIngrListId(prefix));
-  listEl.querySelectorAll('.ingr-row').forEach((row,i)=>{
-    if(arr[i]){
-      arr[i].amount=row.querySelector('.ingr-amount').value.trim();
-      arr[i].unit=row.querySelector('.ingr-unit').value;
-      arr[i].name=row.querySelector('.ingr-name').value.trim();
-    }
-  });
-  return arr.filter(ingr=>ingr.name||ingr.amount); // drop empty rows
-}
-
-// ── INGREDIENT DISPLAY ────────────────────────────────────────────────────
-function ingrDisplayHTML(ingredients){
-  if(!ingredients||!ingredients.length)return '<span style="font-size:13px;color:var(--text-muted);">(no ingredients recorded)</span>';
-  return `<div class="ingr-display-list">${ingredients.map(ingr=>`
-    <div class="ingr-display-row">
-      <span class="ingr-display-amount">${ingr.amount||''}</span>
-      <span class="ingr-display-unit">${ingr.unit||''}</span>
-      <span class="ingr-display-name">${ingr.name||''}</span>
-    </div>`).join('')}</div>`;
-}
-
-// master block ingredient display (compact)
-function masterIngrHTML(ingredients){
-  if(!ingredients||!ingredients.length)return '';
-  return `<div style="margin-bottom:10px;">${ingredients.map(ingr=>`<div class="ingr-display-row"><span class="ingr-display-amount">${ingr.amount||''}</span><span class="ingr-display-unit">${ingr.unit||''}</span><span class="ingr-display-name">${ingr.name||''}</span></div>`).join('')}</div>`;
-}
 
 // ── EMOJI PICKERS ─────────────────────────────────────────────────────────
 function buildEmojiPicker(containerId, currentEmoji, onSelect) {
@@ -667,23 +563,14 @@ function openRecipe(id){
 function renderMasterSection(r){
   const el=document.getElementById('master-section'),iters=r.iterations;
   if(!iters.length){
-    // show v1 base ingredients + method if available
-    const hasIngr=r.baseIngredients&&r.baseIngredients.length;
-    const hasMethod=r.baseRecipe;
-    if(hasIngr||hasMethod){
-      el.innerHTML=`<div class="master-block"><div class="master-block-header"><div class="master-block-title">✦ v1 — starting point</div><span class="master-block-version">your base</span></div><div class="master-block-body">${hasIngr?masterIngrHTML(r.baseIngredients):''}${hasMethod?`<div class="master-snapshot">${r.baseRecipe}</div>`:'</div>'}</div>`;
-    } else {
-      el.innerHTML='';
-    }
+    el.innerHTML=r.baseRecipe?`<div class="master-block"><div class="master-block-header"><div class="master-block-title">✦ v1 — starting point</div><span class="master-block-version">your base</span></div><div class="master-block-body"><div class="master-snapshot">${r.baseRecipe}</div></div></div>`:'';
     return;
   }
   if(iters.length===1&&!r.masterIterId){r.masterIterId=iters[0].id;saveDB();}
   const masterIter=r.masterIterId?iters.find(i=>i.id===r.masterIterId):null;
   const masterIdx=masterIter?iters.indexOf(masterIter):-1;
   if(masterIter){
-    const hasIngr=masterIter.ingredients&&masterIter.ingredients.length;
-    const hasMethod=masterIter.snapshot;
-    el.innerHTML=`<div class="master-block"><div class="master-block-header"><div class="master-block-title">✦ master recipe</div><span class="master-block-version">v${masterIdx+1} · ${formatDate(masterIter.date)}</span></div><div class="master-block-body"><div class="master-stars">${starsHTML(masterIter.rating)}</div>${hasIngr?masterIngrHTML(masterIter.ingredients):''}${hasMethod?`<div class="master-snapshot">${masterIter.snapshot}</div>`:''}</div></div>`;
+    el.innerHTML=`<div class="master-block"><div class="master-block-header"><div class="master-block-title">✦ master recipe</div><span class="master-block-version">v${masterIdx+1} · ${formatDate(masterIter.date)}</span></div><div class="master-block-body"><div class="master-stars">${starsHTML(masterIter.rating)}</div><div class="master-snapshot">${masterIter.snapshot||'(no recipe snapshot recorded)'}</div></div></div>`;
   } else {
     el.innerHTML=`<div class="pick-master-prompt">tap any version below and mark it as your master recipe</div>`;
   }
@@ -717,9 +604,7 @@ function showEditRecipe(){
   document.getElementById('edit-recipe-base').value=r.baseRecipe||'';
   document.getElementById('edit-recipe-notes').value=r.notes||'';
   editSelectedEmoji=r.emoji;
-  editIngredients=JSON.parse(JSON.stringify(r.baseIngredients||[]));
   buildEmojiPicker('edit-emoji-picker', r.emoji, selectEditEmoji);
-  renderIngrList('edit');
   showScreen('screen-edit-recipe');
 }
 function saveEditRecipe(){
@@ -729,10 +614,10 @@ function saveEditRecipe(){
   r.name=name;
   r.emoji=editSelectedEmoji;
   r.tags=document.getElementById('edit-recipe-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
-  r.baseIngredients=harvestIngr('edit');
   r.baseRecipe=document.getElementById('edit-recipe-base').value.trim();
   r.notes=document.getElementById('edit-recipe-notes').value.trim();
   saveDB();showToast('recipe updated ✓');goBack();
+  // refresh recipe detail
   document.getElementById('recipe-detail-title').textContent=r.name;
   document.getElementById('recipe-detail-emoji').textContent=r.emoji;
   document.getElementById('recipe-detail-tags').textContent=r.tags.join(' · ');
@@ -742,6 +627,7 @@ function deleteRecipe(){
   if(!confirm('Delete this recipe and all its cooks? This cannot be undone.'))return;
   db.recipes=db.recipes.filter(x=>x.id!==currentRecipeId);
   saveDB();showToast('recipe deleted');
+  // pop back to home
   screenStack=['screen-home'];
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active','prev'));
   document.getElementById('screen-home').classList.add('active');
@@ -756,20 +642,15 @@ function showLogCook(){
   const vNum=r.iterations.length+1;
   document.getElementById('log-screen-title').textContent=`v${vNum} — log a cook`;
   document.getElementById('log-date').value=todayValue();
-  // carry forward ingredients from last cook or base
-  const lastIter=r.iterations.length>0?r.iterations[r.iterations.length-1]:null;
-  const lastIngr=lastIter?(lastIter.ingredients||[]):(r.baseIngredients||[]);
-  logIngredients=JSON.parse(JSON.stringify(lastIngr));
-  // carry forward method
-  const lastSnap=lastIter?lastIter.snapshot:r.baseRecipe;
+  const lastSnap=r.iterations.length>0?r.iterations[r.iterations.length-1].snapshot:r.baseRecipe;
   document.getElementById('log-snapshot').value=lastSnap||'';
-  const lastNext=lastIter?lastIter.nextTime:'';
+  const lastNext=r.iterations.length>0?r.iterations[r.iterations.length-1].nextTime:'';
   document.getElementById('log-notes').value='';
   document.getElementById('log-notes').placeholder=lastNext?`Last time: "${lastNext}" — how did it go?`:'how did it turn out?';
   document.getElementById('log-next-time').value='';
   document.getElementById('log-save-btn').textContent='save cook log';
   document.getElementById('log-delete-btn').style.display='none';
-  renderLogPhotos();renderChangeList();renderIngrList('log');updateStarUI();
+  renderLogPhotos();renderChangeList();updateStarUI();
   const hint=document.getElementById('rating-hint');if(hint)hint.style.display='inline';
   document.getElementById('change-input-area').style.display='none';
   showScreen('screen-log');
@@ -782,7 +663,6 @@ function showEditIter(){
   logPhotos=[...iter.photos||[]];
   logChanges=[...iter.changes||[]];
   logRating=iter.rating||0;
-  logIngredients=JSON.parse(JSON.stringify(iter.ingredients||[]));
   currentChangeType=null;
   const iterIdx=r.iterations.indexOf(iter);
   document.getElementById('log-screen-title').textContent=`edit v${iterIdx+1}`;
@@ -793,7 +673,7 @@ function showEditIter(){
   document.getElementById('log-next-time').value=iter.nextTime||'';
   document.getElementById('log-save-btn').textContent='save changes';
   document.getElementById('log-delete-btn').style.display='block';
-  renderLogPhotos();renderChangeList();renderIngrList('log');updateStarUI();
+  renderLogPhotos();renderChangeList();updateStarUI();
   const hint=document.getElementById('rating-hint');if(hint)hint.style.display='none';
   document.getElementById('change-input-area').style.display='none';
   showScreen('screen-log');
@@ -847,16 +727,17 @@ function saveLog(){
     photos:[...logPhotos],changes:[...logChanges],rating:logRating,
     notes:document.getElementById('log-notes').value.trim(),
     nextTime:document.getElementById('log-next-time').value.trim(),
-    ingredients:harvestIngr('log'),
     snapshot:document.getElementById('log-snapshot').value.trim()
   };
   if(isEditingIter){
+    // update existing
     const idx=r.iterations.findIndex(i=>i.id===currentIterId);
     if(idx===-1){showToast('error: cook not found');return;}
     r.iterations[idx]={...r.iterations[idx],...iterData};
     try{saveDB();showToast('cook updated ✓');goBack();setTimeout(()=>openIter(currentRecipeId,currentIterId),350);}
     catch(e){r.iterations[idx].photos=[];try{saveDB();showToast('saved (photos skipped)');goBack();setTimeout(()=>openIter(currentRecipeId,currentIterId),350);}catch(e2){showToast('save failed — storage full');}}
   } else {
+    // new cook
     const iter={id:genId(),...iterData};
     r.iterations.push(iter);
     if(r.iterations.length===1)r.masterIterId=iter.id;
@@ -873,6 +754,7 @@ function deleteIter(){
     r.masterIterId=r.iterations.length===1?r.iterations[0].id:null;
   }
   saveDB();showToast('cook deleted');
+  // go back to recipe detail
   screenStack=screenStack.filter(s=>s!=='screen-log'&&s!=='screen-iter');
   if(!screenStack.includes('screen-recipe'))screenStack.push('screen-recipe');
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active','prev'));
@@ -900,12 +782,7 @@ function openIter(recipeId,iterId){
   if(iter.notes){ns.style.display='block';document.getElementById('iter-detail-notes').textContent=iter.notes;}else{ns.style.display='none';}
   const nx=document.getElementById('iter-next-section');
   if(iter.nextTime){nx.style.display='block';document.getElementById('iter-detail-next').textContent=iter.nextTime;}else{nx.style.display='none';}
-  // ingredients
-  const is=document.getElementById('iter-ingr-section');
-  if(iter.ingredients&&iter.ingredients.length>0){is.style.display='block';document.getElementById('iter-detail-ingr').innerHTML=ingrDisplayHTML(iter.ingredients);}else{is.style.display='none';}
-  // method / snapshot
-  const ss=document.getElementById('iter-snapshot-section');
-  if(iter.snapshot){ss.style.display='block';document.getElementById('iter-detail-snapshot').textContent=iter.snapshot;}else{ss.style.display='none';}
+  document.getElementById('iter-detail-snapshot').textContent=iter.snapshot||'(no snapshot recorded)';
   const mw=document.getElementById('iter-master-btn-wrap');
   mw.innerHTML=isMaster?'<div style="text-align:center;font-size:13px;color:var(--gold);">✦ this is your master recipe</div>':`<button class="master-btn" onclick="markAsMaster('${recipeId}','${iterId}')">✦ mark as master recipe</button>`;
   showScreen('screen-iter');
@@ -922,25 +799,17 @@ function markAsMaster(recipeId,iterId){
 // ── NEW RECIPE ────────────────────────────────────────────────────────────
 function initNewRecipe(){
   selectedEmoji='🍖';
-  newIngredients=[];
   buildEmojiPicker('new-emoji-picker','🍖',selectNewEmoji);
   document.getElementById('new-name').value='';
   document.getElementById('new-tags').value='';
   document.getElementById('new-recipe-text').value='';
   document.getElementById('new-notes').value='';
-  renderIngrList('new');
   showScreen('screen-new-recipe');
 }
 function saveNewRecipe(){
   const name=document.getElementById('new-name').value.trim();if(!name){showToast('please enter a recipe name');return;}
   const tags=document.getElementById('new-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
-  const recipe={
-    id:genId(),name,emoji:selectedEmoji,tags,
-    baseIngredients:harvestIngr('new'),
-    baseRecipe:document.getElementById('new-recipe-text').value.trim(),
-    notes:document.getElementById('new-notes').value.trim(),
-    masterIterId:null,createdAt:new Date().toISOString(),iterations:[]
-  };
+  const recipe={id:genId(),name,emoji:selectedEmoji,tags,baseRecipe:document.getElementById('new-recipe-text').value.trim(),notes:document.getElementById('new-notes').value.trim(),masterIterId:null,createdAt:new Date().toISOString(),iterations:[]};
   db.recipes.unshift(recipe);saveDB();
   showToast('recipe created ✓');goBack();renderHome();
 }
@@ -965,6 +834,185 @@ function renderJournal(){
 function formatDate(iso){const d=new Date(iso);return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
 function formatRelDate(iso){const d=new Date(iso),now=new Date(),diff=Math.floor((now-d)/86400000);if(diff===0)return'today';if(diff===1)return'yesterday';if(diff<7)return`${diff}d ago`;if(diff<30)return`${Math.floor(diff/7)}w ago`;return formatDate(iso);}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
+
+
+// ── AUDIO RECORDING ──────────────────────────────────────────────────────
+let mediaRecorder=null,audioChunks=[],recTimerInterval=null,recSeconds=0,logAudios=[];
+let currentAudio=null,currentAudioItem=null;
+
+function toggleRecording(){
+  if(mediaRecorder&&mediaRecorder.state==='recording'){stopRecording();}
+  else{startRecording();}
+}
+
+async function startRecording(){
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    // pick best supported format
+    const mimeType=['audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus','audio/mp4'].find(m=>MediaRecorder.isTypeSupported(m))||'';
+    const opts=mimeType?{mimeType}:{};
+    mediaRecorder=new MediaRecorder(stream,opts);
+    audioChunks=[];
+    mediaRecorder.ondataavailable=e=>{if(e.data.size>0)audioChunks.push(e.data);};
+    mediaRecorder.onstop=()=>{
+      stream.getTracks().forEach(t=>t.stop());
+      const blob=new Blob(audioChunks,{type:mediaRecorder.mimeType||'audio/webm'});
+      const reader=new FileReader();
+      reader.onload=()=>{
+        logAudios.push({id:genId(),data:reader.result,duration:recSeconds,mimeType:blob.type,createdAt:new Date().toISOString()});
+        renderLogAudios();
+      };
+      reader.readAsDataURL(blob);
+    };
+    mediaRecorder.start(100);
+    recSeconds=0;
+    document.getElementById('rec-dot').classList.add('pulse');
+    document.getElementById('rec-btn-label').textContent='tap to stop recording';
+    document.getElementById('rec-timer').style.display='inline';
+    document.getElementById('record-btn').classList.add('recording');
+    recTimerInterval=setInterval(()=>{
+      recSeconds++;
+      document.getElementById('rec-timer').textContent=formatRecTime(recSeconds);
+    },1000);
+  }catch(err){
+    showToast('microphone access denied');
+  }
+}
+
+function stopRecording(){
+  if(!mediaRecorder)return;
+  clearInterval(recTimerInterval);
+  mediaRecorder.stop();
+  document.getElementById('rec-dot').classList.remove('pulse');
+  document.getElementById('rec-btn-label').textContent='hold to record a memo';
+  document.getElementById('rec-timer').style.display='none';
+  document.getElementById('record-btn').classList.remove('recording');
+  mediaRecorder=null;
+}
+
+function formatRecTime(s){return`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;}
+
+function renderLogAudios(){
+  document.getElementById('audio-list').innerHTML=logAudios.map((a,i)=>audioItemHTML(a,i,'log')).join('');
+}
+
+function renderIterAudios(audios){
+  const sec=document.getElementById('iter-audio-section');
+  if(!audios||!audios.length){sec.style.display='none';return;}
+  sec.style.display='block';
+  document.getElementById('iter-audio-list').innerHTML=audios.map((a,i)=>audioItemHTML(a,i,'iter')).join('');
+}
+
+function audioItemHTML(a,i,ctx){
+  const bars=Array.from({length:20},(_,b)=>{
+    const h=Math.max(3,Math.round(8+Math.sin(b*0.7+i*1.3)*5+Math.random()*6));
+    return `<div class="audio-waveform-bar" id="wbar-${a.id}-${b}" style="height:${h}px;"></div>`;
+  }).join('');
+  const delBtn=ctx==='log'?`<button class="audio-del-btn" onclick="deleteLogAudio(${i})" title="delete">×</button>`:'';
+  return `<div class="audio-item" id="aitem-${a.id}">
+    <button class="audio-play-btn" id="abtn-${a.id}" onclick="toggleAudio('${a.id}','${ctx}',${i})" title="play/pause">▶</button>
+    <div class="audio-waveform">${bars}</div>
+    <span class="audio-meta" id="aprog-${a.id}">${formatRecTime(a.duration)}</span>
+    ${delBtn}
+  </div>`;
+}
+
+function toggleAudio(audioId,ctx,idx){
+  // stop any currently playing
+  if(currentAudio){
+    currentAudio.pause();currentAudio=null;
+    if(currentAudioItem){
+      document.getElementById('abtn-'+currentAudioItem)?.classList.remove('playing');
+      const prevBtn=document.getElementById('abtn-'+currentAudioItem);
+      if(prevBtn)prevBtn.textContent='▶';
+    }
+    if(currentAudioItem===audioId){currentAudioItem=null;return;}
+  }
+  const audios=ctx==='log'?logAudios:(db.recipes.find(r=>r.id===currentRecipeId)?.iterations.find(i=>i.id===currentIterId)?.audios||[]);
+  const a=audios[idx];if(!a)return;
+  const audio=new Audio(a.data);
+  currentAudio=audio;currentAudioItem=audioId;
+  const btn=document.getElementById('abtn-'+audioId);
+  const prog=document.getElementById('aprog-'+audioId);
+  if(btn){btn.textContent='⏸';btn.classList.add('playing');}
+  audio.ontimeupdate=()=>{
+    if(prog)prog.textContent=formatRecTime(Math.floor(audio.currentTime));
+    // animate bars
+    const pct=audio.currentTime/audio.duration;
+    const totalBars=20,activeBars=Math.floor(pct*totalBars);
+    for(let b=0;b<totalBars;b++){
+      const bar=document.getElementById(`wbar-${audioId}-${b}`);
+      if(bar)bar.classList.toggle('active',b<activeBars);
+    }
+  };
+  audio.onended=()=>{
+    if(btn){btn.textContent='▶';btn.classList.remove('playing');}
+    if(prog)prog.textContent=formatRecTime(a.duration);
+    for(let b=0;b<20;b++){document.getElementById(`wbar-${audioId}-${b}`)?.classList.remove('active');}
+    currentAudio=null;currentAudioItem=null;
+  };
+  audio.play().catch(()=>showToast('could not play audio'));
+}
+
+function deleteLogAudio(i){
+  if(currentAudioItem===logAudios[i]?.id&&currentAudio){currentAudio.pause();currentAudio=null;currentAudioItem=null;}
+  logAudios.splice(i,1);renderLogAudios();
+}
+
+// patch showLogCook and showEditIter to reset/load audios
+const _origShowLogCook=showLogCook;
+showLogCook=function(){
+  logAudios=[];
+  _origShowLogCook();
+  renderLogAudios();
+};
+const _origShowEditIter=showEditIter;
+showEditIter=function(){
+  const r=db.recipes.find(x=>x.id===currentRecipeId);
+  const iter=r?.iterations.find(i=>i.id===currentIterId);
+  logAudios=iter?.audios?[...iter.audios]:[];
+  _origShowEditIter();
+  renderLogAudios();
+};
+
+// patch saveLog to include audios
+const _origSaveLog=saveLog;
+saveLog=function(){
+  // inject audios into iterData by monkey-patching after the fact
+  // We override the push/update logic here
+  if(!currentRecipeId)return _origSaveLog();
+  const r=db.recipes.find(x=>x.id===currentRecipeId);if(!r)return _origSaveLog();
+  const dateVal=document.getElementById('log-date').value;
+  const iterData={
+    date:dateVal?new Date(dateVal+'T12:00:00').toISOString():new Date().toISOString(),
+    photos:[...logPhotos],audios:[...logAudios],changes:[...logChanges],rating:logRating,
+    notes:document.getElementById('log-notes').value.trim(),
+    nextTime:document.getElementById('log-next-time').value.trim(),
+    snapshot:document.getElementById('log-snapshot').value.trim()
+  };
+  if(isEditingIter){
+    const idx=r.iterations.findIndex(i=>i.id===currentIterId);
+    if(idx===-1){showToast('error: cook not found');return;}
+    r.iterations[idx]={...r.iterations[idx],...iterData};
+    try{saveDB();showToast('cook updated ✓');goBack();setTimeout(()=>openIter(currentRecipeId,currentIterId),350);}
+    catch(e){r.iterations[idx].photos=[];r.iterations[idx].audios=[];try{saveDB();showToast('saved (media skipped)');goBack();setTimeout(()=>openIter(currentRecipeId,currentIterId),350);}catch(e2){showToast('save failed — storage full');}}
+  } else {
+    const iter={id:genId(),...iterData};
+    r.iterations.push(iter);
+    if(r.iterations.length===1)r.masterIterId=iter.id;
+    try{saveDB();showToast('cook logged ✓');goBack();setTimeout(()=>openRecipe(currentRecipeId),350);}
+    catch(e){iter.photos=[];iter.audios=[];try{saveDB();showToast('saved (media skipped)');goBack();setTimeout(()=>openRecipe(currentRecipeId),350);}catch(e2){r.iterations.pop();showToast('save failed — storage full');}}
+  }
+};
+
+// patch openIter to show audios
+const _origOpenIter=openIter;
+openIter=function(recipeId,iterId){
+  _origOpenIter(recipeId,iterId);
+  const r=db.recipes.find(x=>x.id===recipeId);
+  const iter=r?.iterations.find(i=>i.id===iterId);
+  renderIterAudios(iter?.audios||[]);
+};
 
 document.querySelector('.fab').onclick=initNewRecipe;
 

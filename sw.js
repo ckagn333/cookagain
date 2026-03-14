@@ -1,4 +1,4 @@
-const CACHE = 'cook-again-v3';
+const CACHE = 'cook-again-v5';
 const ASSETS = ['/cookagain/', '/cookagain/index.html'];
 
 self.addEventListener('install', e => {
